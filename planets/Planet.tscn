@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmu2i86ofwsi0"]
+
+[ext_resource type="Script" path="res://planets/Planet.gd" id="1_gblg6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j36m6"]
+bounce = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_injqv"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_vtwkl"]
+
+[node name="Planet" type="RigidBody3D" groups=["planet"]]
+collision_layer = 2
+collision_mask = 14
+physics_material_override = SubResource("PhysicsMaterial_j36m6")
+script = ExtResource("1_gblg6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_injqv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_vtwkl")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+
+[connection signal="focus_bumped" from="." to="." method="_on_focus_bumped"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]

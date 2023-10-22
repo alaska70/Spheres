@@ -1,0 +1,8 @@
+res://Planet.tscn
+res://main/Main.tscn
+res://focus/Focus.tscn
+res://camera/CameraFocus.gd
+res://focus/Focus.gd
+res://planets/Planet.gd
+res://planets/Planet.tscn
+res://main/Main.gd

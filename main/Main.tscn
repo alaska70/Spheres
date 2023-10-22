@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://c01sle6kakttl"]
+
+[ext_resource type="Script" path="res://main/Main.gd" id="1_kj0nb"]
+[ext_resource type="Texture2D" uid="uid://yrjkikq30mxo" path="res://assets/ground/Transparent.png" id="2_b6rro"]
+[ext_resource type="PackedScene" uid="uid://bfvmahx18m4ut" path="res://focus/Focus.tscn" id="2_k5ge8"]
+[ext_resource type="Script" path="res://camera/CameraFocus.gd" id="3_pdeoc"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_171bn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nnnl0"]
+size = Vector3(200, 2, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pc7ur"]
+transparency = 1
+albedo_texture = ExtResource("2_b6rro")
+
+[sub_resource type="BoxMesh" id="BoxMesh_44i2v"]
+material = SubResource("StandardMaterial3D_pc7ur")
+size = Vector3(60, 2, 60)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_kj0nb")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_171bn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_nnnl0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_44i2v")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50, 0)
+shadow_enabled = true
+
+[node name="Focus" parent="." instance=ExtResource("2_k5ge8")]
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+projection = 1
+size = 19.0
+script = ExtResource("3_pdeoc")
+
+[node name="SubViewport" type="SubViewport" parent="."]

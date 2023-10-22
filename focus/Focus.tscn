@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://bfvmahx18m4ut"]
+
+[ext_resource type="Script" path="res://focus/Focus.gd" id="1_u16ve"]
+[ext_resource type="Texture2D" uid="uid://bqp47k1obri16" path="res://assets/focus/focus_yellow.png" id="2_l2nm7"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8j30u"]
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aogkr"]
+albedo_texture = ExtResource("2_l2nm7")
+
+[sub_resource type="TorusMesh" id="TorusMesh_hgr0r"]
+material = SubResource("StandardMaterial3D_aogkr")
+outer_radius = 0.75
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5d8lv"]
+height = 3.0
+radius = 0.75
+
+[node name="Focus" type="CharacterBody3D"]
+collision_mask = 14
+script = ExtResource("1_u16ve")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_8j30u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_hgr0r")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+shape = SubResource("CylinderShape3D_5d8lv")
+target_position = Vector3(0, 1.5, 0)
+max_results = 4
+collision_mask = 2
+
+[node name="SnapTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="SnapTimer" to="." method="_on_snap_timer_timeout"]
